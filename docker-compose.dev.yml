@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
 
   ollama:
-    image: ollama/ollama
+    image: ollama/ollama:0.1.32
     ports:
       - '11434:11434'
     volumes:
