@@ -12,5 +12,14 @@ services:
     command: bash -c "pip install -r requirements.txt && streamlit run app.py"
     restart: unless-stopped
 
+  ollama:
+    image: ollama/ollama
+    ports:
+      - '11434:11434'
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+
 volumes:
   python-deps: {}
+  ollama: {}
