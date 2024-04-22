@@ -19,7 +19,7 @@ services:
     networks:
       - internal-net
     volumes:
-      - ollama:/root/.ollama
+      - ollama_models:/root/.ollama/models
     restart: unless-stopped
 
 networks:
@@ -28,4 +28,4 @@ networks:
 
 volumes:
   python-deps: {}
-  ollama: {}
+  ollama_models: {}
