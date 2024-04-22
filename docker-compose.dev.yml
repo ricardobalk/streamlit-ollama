@@ -1,0 +1,31 @@
+version: '3.9'
+name: streamlit-ollama
+services:
+  streamlit:
+    image: python:3.9-slim
+    ports:
+      - '8501:8501'
+    networks:
+      - internal-net
+    volumes:
+      - ./app:/app
+      - python-deps:/root/.cache/pip
+    working_dir: /app
+    command: bash -c "pip install -r requirements.txt && streamlit run app.py"
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:0.1.32
+    networks:
+      - internal-net
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+
+networks:
+  internal-net:
+    driver: bridge
+
+volumes:
+  python-deps: {}
+  ollama: {}
