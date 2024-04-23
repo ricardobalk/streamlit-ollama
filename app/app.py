@@ -7,7 +7,6 @@ ollama_client = ollama.Client(host='http://ollama:11434')
 package_data = {
    "name": "Reference LLM Chatbot implementation using Streamlit and Ollama",
    "version": "1.0.0-alpha.1",
-   "release_date": datetime.date(2024, 4, 22),
 }
 
 st.set_page_config(
@@ -39,7 +38,7 @@ with st.sidebar:
     st.session_state['model'] = model
 
 with st.container():
-  st.header(f"{package_data['name']} ({package_data['release_date'].strftime('%d %B %Y')})")
+  st.header(f"{package_data['name']}")
   # st.write(footer_text)
 
   for message in st.session_state['chat_messages']:
