@@ -24,7 +24,7 @@ docker compose exec ollama ollama pull llama3
 
 This will execute the command `ollama pull llama3` in the `ollama` container.
 
-> Keep in mind to update `app.py` as well when you want to use `llama3` instead of `llama2`.
+> Note: Keep in mind to pick the right model in the preferences panel of the GUI.
 
 **3) Try it out**
 

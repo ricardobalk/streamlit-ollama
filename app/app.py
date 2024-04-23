@@ -22,7 +22,21 @@ if 'chat_messages' not in st.session_state:
       {"role": "system", "content": "You're an AI assistant that helps users with a multitude of tasks."}
   ]
 
-footer_text = f"{package_data['name']} {package_data['version']}, geupdate op {package_data['release_date'].strftime('%B %d, %Y')}."
+if 'model' not in st.session_state:
+  st.session_state['model'] = 'llama2'
+
+footer_text = f"{package_data['name']} {package_data['version']}."
+
+with st.sidebar:
+  st.header("Preferences")
+
+  st.subheader("Model")
+  model = st.radio(
+    "Choose a model",
+    ("llama2", "llama3")
+  )
+  if model:
+    st.session_state['model'] = model
 
 with st.container():
   st.header(f"{package_data['name']} ({package_data['release_date'].strftime('%d %B %Y')})")
@@ -42,9 +56,9 @@ with st.container():
       response_placeholder = st.empty()
       full_response = ""
       for chunk in ollama_client.chat(
-          model='llama2',
-          stream=True,
+          model=st.session_state['model'],
           messages=st.session_state['chat_messages'],
+          stream=True,
       ):
         full_response += chunk['message']['content']
         response_placeholder.markdown(full_response + "▌")
