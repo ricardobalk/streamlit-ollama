@@ -5,7 +5,7 @@ import ollama
 ollama_client = ollama.Client(host='http://ollama:11434')
          
 package_data = {
-   "name": "Reference LLM Chatbot implementation using Streanlit and Ollama",
+   "name": "Reference LLM Chatbot implementation using Streamlit and Ollama",
    "version": "1.0.0-alpha.1",
    "release_date": datetime.date(2024, 4, 22),
 }
