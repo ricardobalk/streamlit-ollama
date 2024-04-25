@@ -1,0 +1,14 @@
+{
+  "models": [
+    {
+      "id": "llama2",
+      "name": "Llama 2",
+      "description": "Llama 2 is a versatile model suitable for a variety of tasks."
+    },
+    {
+      "id": "llama3",
+      "name": "Llama 3",
+      "description": "Llama 3 offers enhanced capabilities and improved accuracy for complex tasks."
+    }
+  ]
+}
