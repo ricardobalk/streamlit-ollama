@@ -15,12 +15,17 @@ st.set_page_config(
     layout="wide",
 )
 
+def initialize_chat_messages():
+    st.session_state['chat_messages'] = [
+        {"role": "system", "content": st.session_state['setup_prompt']}
+    ]
+
 # Initializes Streamlit session state variables
 def initialize_streamlit_session():
+  st.session_state['setup_prompt'] = "You're an AI assistant that helps users with a multitude of tasks."
+
   if 'chat_messages' not in st.session_state:
-    st.session_state['chat_messages'] = [
-        {"role": "system", "content": "You're an AI assistant that helps users with a multitude of tasks."}
-    ]
+    initialize_chat_messages()
 
   if 'model' not in st.session_state:
     st.session_state['model'] = 'llama2'
@@ -74,12 +79,18 @@ def sl_module_model_selection():
         if st.button("Pull model"):
             pull_ollama_model()
 
+def sl_module_chat():
+  st.subheader("Chat")
+  if st.button("Reset chat window"):
+      initialize_chat_messages()
+
 ### Streamlit app
 initialize_streamlit_session()
 
 with st.sidebar:
     st.header("Preferences")
     sl_module_model_selection()
+    sl_module_chat()
 
 st.header(f"{package_data['name']}")
 
