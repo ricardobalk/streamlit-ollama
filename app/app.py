@@ -7,7 +7,7 @@ ollama_client = ollama.Client(host='http://ollama:11434')
 
 package_data = {
    "name": "Reference LLM Chatbot implementation using Streamlit and Ollama",
-   "version": "1.0.0-alpha.2",
+   "version": "1.0.0-alpha.3",
 }
 
 st.set_page_config(
