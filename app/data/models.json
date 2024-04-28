@@ -1,0 +1,29 @@
+{
+  "models": [
+    {
+      "id": "llama2",
+      "name": "Llama 2",
+      "description": "Llama 2 is a versatile model suitable for a variety of tasks."
+    },
+    {
+      "id": "llama3",
+      "name": "Llama 3",
+      "description": "Llama 3 offers enhanced capabilities and improved accuracy for complex tasks."
+    },
+    {
+      "id": "wizard-vicuna-uncensored:7b",
+      "name": "Wizard Vicuna Uncensored (7B)",
+      "description": "Wizard Vicuna Uncensored (7B) is a model based on Llama 2 uncensored by Eric Hartford."
+    },
+    {
+      "id": "wizard-vicuna-uncensored:13b",
+      "name": "Wizard Vicuna Uncensored (13B)",
+      "description": "Wizard Vicuna Uncensored (13B) is a model based on Llama 2 uncensored by Eric Hartford."
+    },
+    {
+      "id": "wizard-vicuna-uncensored:30b",
+      "name": "Wizard Vicuna Uncensored (30B)",
+      "description": "Wizard Vicuna Uncensored (30B) is a model based on Llama 2 uncensored by Eric Hartford."
+    }
+  ]
+}
