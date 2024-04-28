@@ -1,5 +1,6 @@
 import json
 import ollama
+import requests
 import streamlit as st
 
 ollama_client = ollama.Client(host='http://ollama:11434')
@@ -36,6 +37,22 @@ def load_models():
         data = json.load(file)
     return data['models']
 
+# Downloads an up-to-date list of models and saves it to 'models.json'
+def update_model_list():
+    url = "https://ollama-models.zwz.workers.dev/"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        models_data = response.json()
+        
+        # Save the models data to a file
+        with open('./data/models.json', 'w') as file:
+            json.dump(models_data, file)
+        
+        st.success("Models updated successfully.")
+    else:
+        st.error(f"Failed to update models. Status code: {response.status_code}")
+
 def pull_ollama_model():
     model_name = st.session_state['model']
     response = ollama_client.pull(model=model_name, stream=True)
@@ -65,19 +82,27 @@ def pull_ollama_model():
 # Model selection module to be used within the Streamlit App layout.
 def sl_module_model_selection():
     st.subheader("Model")
+
     models = load_models()
-    model_options = {model['id']: (model['name'], model['description']) for model in models}
-    model_id = st.selectbox(
+    model_options = {model['name']: (model['name'], model['description']) for model in models}
+    model_identifier = st.selectbox(
         "Choose a model",
         options=list(model_options.keys()),
         format_func=lambda x: model_options[x][0]
     )
-    if model_id:
-        st.session_state['model'] = model_id
-        st.write(model_options[model_id][1])
 
-        if st.button("Pull model"):
-            pull_ollama_model()
+    if model_identifier:
+        st.session_state['model'] = model_identifier
+        
+        st.write(model_options[model_identifier][1])
+
+        col1, col2 = st.columns(2, gap="small")
+        with col1:
+            if st.button("Update list", use_container_width=True):
+              update_model_list()
+        with col2:
+            if st.button("Pull model", use_container_width=True):
+              pull_ollama_model()
 
 def sl_module_chat():
   st.subheader("Chat")
