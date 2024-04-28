@@ -2,6 +2,7 @@ import json
 import ollama
 import requests
 import streamlit as st
+import time
 
 ollama_client = ollama.Client(host='http://ollama:11434')
 
@@ -30,12 +31,32 @@ def initialize_streamlit_session():
 
   if 'model' not in st.session_state:
     st.session_state['model'] = 'llama2'
+  
+  if 'available_models' not in st.session_state:
+    load_available_models()
 
 # Loads available models from JSON file
-def load_models():
-    with open('./data/models.json', 'r') as file:
-        data = json.load(file)
-    return data['models']
+def load_available_models():
+    try:
+        with open('./data/models.json', 'r') as file:
+            data = json.load(file)
+        
+        # Check the type of data loaded
+        if not isinstance(data, dict):
+            raise TypeError("Expected a dictionary but got: {}".format(type(data)))
+        
+        # Assuming 'models' is the key containing the models
+        models = data.get('models')
+        
+        # Check if 'models' key exists and is a list
+        if not isinstance(models, list):
+            raise TypeError("Expected 'models' key to contain a list but got: {}".format(type(models)))
+        
+        # Store the models in Streamlit's Session State
+        st.session_state['available_models'] = models
+        
+    except Exception as e:
+        print("Error loading models:", e)
 
 # Downloads an up-to-date list of models and saves it to 'models.json'
 def update_model_list():
@@ -49,7 +70,11 @@ def update_model_list():
         with open('./data/models.json', 'w') as file:
             json.dump(models_data, file)
         
+        load_available_models()
         st.success("Models updated successfully.")
+
+        time.sleep(2)
+        st.rerun()
     else:
         st.error(f"Failed to update models. Status code: {response.status_code}")
 
@@ -83,7 +108,7 @@ def pull_ollama_model():
 def sl_module_model_selection():
     st.subheader("Model")
 
-    models = load_models()
+    models = st.session_state['available_models']
     model_options = {model['name']: (model['name'], model['description']) for model in models}
     model_identifier = st.selectbox(
         "Choose a model",
